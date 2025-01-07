@@ -27,6 +27,8 @@ public class SpawnWP : MonoBehaviour
         GameObject weapon = pool.GetWeaponFromPool();
         WeaponManager weaponManager = weapon.GetComponent<WeaponManager>();
         Rigidbody rb = weapon.GetComponent<Rigidbody>();
+        Collider collider = weapon.GetComponent<Collider>();
+        collider.enabled = false;
         playerAttack.weaponManager = weaponManager;
         Animator playerAnim = playerAttack.GetComponent<Animator>();
         playerAnim.SetBool("IsAttack",false);

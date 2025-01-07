@@ -1,21 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-
+using TMPro;
 public class SpawnEnemy : MonoBehaviour
 {
     public Material[] listMaterial;
-    public GameObject enemyPrefab;
+    public Transform[] listSpawnPoint;
+    private EnemyPool enemyPool;
+    public int enemyCount;
+    private int currentPoint = 0;
+    
     void Start()
     {
-        Spawn();
+        enemyPool = EnemyPool.instance;
+        
+        InvokeRepeating("Spawn", 0f,3f);
+        //Spawn();
+    }
+    private void Update()
+    {
+        if (enemyPool.poolSize <= 0 || enemyCount <=0) 
+        {
+            CancelInvoke("Spawn");
+        }
+        
     }
 
     void Spawn() 
     {
-        Instantiate(enemyPrefab);
-        enemyPrefab.transform.position = this.transform.position;
-        int random = Random.Range(1, 8);
+        GameObject enemyPrefab = enemyPool.GetEnemyFromPool();
+        enemyPrefab.transform.position = listSpawnPoint[currentPoint].transform.position;
+        currentPoint++;
+        if (currentPoint >= listSpawnPoint.Length)
+        {
+            currentPoint = 0;
+        }
+
+        enemyCount--;
+        int randomColor = Random.Range(0, 7);
         Transform[] childs = enemyPrefab.GetComponentsInChildren<Transform>();
         foreach (Transform child in childs)
         {
@@ -28,7 +51,7 @@ public class SpawnEnemy : MonoBehaviour
                 // Duyệt qua từng vật liệu của Renderer
                 for (int i = 0; i < materials.Length; i++)
                 {
-                    materials[i] = listMaterial[random];
+                    materials[i] = listMaterial[randomColor];
                 }
                 renderer.materials = materials;
             }

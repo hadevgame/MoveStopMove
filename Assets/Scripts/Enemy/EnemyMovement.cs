@@ -4,72 +4,97 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    public static EnemyMovement instance;
+    
     public Animator animator;
-    public float minDistance = 5f;  
-    public float maxDistance = 10f; 
-    public float moveSpeed = 2f;    
-    private Vector3 startPosition;  
+    public float minDistance;
+    public float maxDistance;
+    public float moveSpeed;    
+    
     private Vector3 targetPosition;
-    private bool move = false;
+    public bool move = true;
+    public bool canAttack = true;
+    public bool canMove = true;
     public bool isDead = false;
+    
+    private void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+        }
+    }
     void Start()
     {
-        startPosition = transform.position;
         // Tạo ra hướng di chuyển và khoảng cách ngẫu nhiên
         SetRandomTargetPosition();
     }
     void Update()
     {
-        if(isDead == false) 
+        if (isDead == false )
         {
+            
             MoveEnemy();
+            
         }
-        else StartCoroutine(DeadDelayed());
+        else 
+        {
+            StartCoroutine(DeadDelayed());
+        }
         
     }
-    void SetRandomTargetPosition()
+    public void SetRandomTargetPosition()
     {
         float randomX = Random.Range(-1f, 1f); // Ngẫu nhiên theo trục X
         float randomZ = Random.Range(-1f, 1f); // Ngẫu nhiên theo trục Z
         Vector3 randomDirection = new Vector3(randomX, 0f, randomZ).normalized;
         float randomDistance = Random.Range(minDistance, maxDistance); 
-        targetPosition = startPosition + randomDirection.normalized * randomDistance;
-        //move = false;
+        targetPosition = transform.position + randomDirection.normalized * randomDistance;
+        //targetPosition = new Vector3(randomX, transform.position.y, randomZ);
+        
     }
     void MoveEnemy()
     {
-        if (Vector3.Distance(transform.position, targetPosition) > 0.1f && move == false)
+        if (Vector3.Distance(transform.position, targetPosition) > 0.1f && canMove == true)
         {
+            move = true;
             animator.SetBool("IsIdle", false);
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            animator.SetBool("IsAttack", false);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed *3 * Time.deltaTime);
+
             Vector3 direction = targetPosition - transform.position;
+            //transform.position += direction.normalized * moveSpeed * Time.deltaTime;
             Vector3 directionNoY = new Vector3(direction.x, 0, direction.z);
             transform.rotation = Quaternion.LookRotation(directionNoY);
         }
         else 
         {
-            move = true;
             animator.SetBool("IsIdle", true);
-            SetRandomTargetPosition();
-            StartCoroutine(MoveDelayed());
+            move = false;
+            canAttack = true;
+            canMove = false;
+            if (Vector3.Distance(transform.position, targetPosition) <= 0.1f) 
+            {
+                SetRandomTargetPosition();
+                StartCoroutine(MoveDelayed());
+            }
+                
         } 
     }
-
     private IEnumerator MoveDelayed()
     {
         yield return new WaitForSeconds(5f);
-        move = false;
+        canMove = true;
         //SetRandomTargetPosition() ;
     }
-
     private IEnumerator DeadDelayed()
     {
         Collider collider = this.GetComponent<Collider>();
         Rigidbody rigidbody = this.GetComponent<Rigidbody>();
         rigidbody.useGravity = false;
         collider.enabled = false;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         Destroy(this.gameObject);
-        
+        //this.gameObject.SetActive(false);
     }
 }

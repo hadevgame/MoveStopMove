@@ -22,7 +22,7 @@ public class DisplayTargetPoint : MonoBehaviour
             target.SetActive(false);
         }
     }
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Enemy")) 
         {
@@ -34,6 +34,17 @@ public class DisplayTargetPoint : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other)
+    {
+        target.SetActive(false);
+    }*/
+
+    public void SetTargetPosition(GameObject objectTarget) 
+    {
+        objecOnTarget = objectTarget;
+        target.SetActive(true);
+        target.transform.position = objecOnTarget.transform.position;
+    }
+    public void SetOffTarget() 
     {
         target.SetActive(false);
     }

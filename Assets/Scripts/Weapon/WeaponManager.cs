@@ -12,8 +12,12 @@ public class WeaponManager : MonoBehaviour
     private DisplayTargetPoint displayTargetPoint;
     private Vector3 startPosition;
     private PlayerAttack player;
+    private CanvasAliveManager canvasAliveManager;
+    private Collider weaponCollider;
     private void Start()
     {
+        weaponCollider = GetComponent<Collider>();
+        canvasAliveManager = CanvasAliveManager.instance;
         player = PlayerAttack.instance;
         pool = WeaponPool.instance;
         spawn = SpawnWP.instance;
@@ -24,7 +28,7 @@ public class WeaponManager : MonoBehaviour
     {
         if(startPosition!= null) 
         {
-            if(Vector3.Distance(startPosition,transform.position) >= 4 * player.transform.localScale.x) 
+            if(Vector3.Distance(startPosition,transform.position) >= 4.5f * player.transform.localScale.x) 
             {
                 pool.ReturnToPool(this.gameObject);
                 spawn.Spawn();
@@ -37,8 +41,9 @@ public class WeaponManager : MonoBehaviour
         this.transform.parent = null;
         rb.isKinematic = false;
         this.transform.rotation = Quaternion.Euler(90, 0, 0);
-        rb.velocity = direction.normalized * 8;
-        rb.angularVelocity = new Vector3(0, 100, 0);
+        rb.velocity = direction.normalized * 9;
+        rb.angularVelocity = new Vector3(0, 200, 0);
+        weaponCollider.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,10 +54,16 @@ public class WeaponManager : MonoBehaviour
             Animator objectAnim = other.gameObject.GetComponent<Animator>();
             objectAnim.SetBool("IsDead", true);
             enemyMovement.isDead = true;
+            canvasAliveManager.UpdateAlive();
             pool.ReturnToPool(this.gameObject);
             spawn.Spawn();
             pointManager.UpdatePoint();
         }
+        /*if (other.CompareTag("Player")) 
+        {
+            Animator objectAnim = other.gameObject.GetComponent<Animator>();
+            objectAnim.SetBool("IsDead", true);
+        }*/
         
     }
     private IEnumerator ReturnWeaponToPoolDelayed()

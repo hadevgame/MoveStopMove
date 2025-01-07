@@ -18,7 +18,6 @@ public class PlayerAttack : MonoBehaviour
             instance = this;
         }
     }
-
     private void Update()
     {
         cooldown -= Time.deltaTime;
@@ -28,13 +27,11 @@ public class PlayerAttack : MonoBehaviour
     {
        spawn = SpawnWP.instance;
     }
-    
-
     public void Attack(Collider other)
     {
         if (playerMovement.move == false && playerMovement.canAttack == true)
         {
-            cooldown = 2f;
+            cooldown = 1f;
             playerMovement.canAttack = false;
             Vector3 targetPos = other.transform.position;
             Vector3 direction = targetPos - transform.position;
