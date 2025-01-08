@@ -7,7 +7,6 @@ public class SpawnWP : MonoBehaviour
     private WeaponPool pool;
     private PlayerAttack playerAttack;
     public static SpawnWP instance;
-
     private void Awake()
     {
         if (!instance) 
@@ -31,10 +30,11 @@ public class SpawnWP : MonoBehaviour
         collider.enabled = false;
         playerAttack.weaponManager = weaponManager;
         Animator playerAnim = playerAttack.GetComponent<Animator>();
-        playerAnim.SetBool("IsAttack",false);
+        playerAnim.SetBool("IsAttack", false);
         weapon.transform.position = this.transform.position;
         weapon.transform.SetParent(this.transform);
         weapon.transform.rotation = this.transform.rotation;
         rb.isKinematic = true;
+        
     }
 }

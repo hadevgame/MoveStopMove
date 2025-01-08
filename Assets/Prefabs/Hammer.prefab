@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3725903485311932139}
+  checkCollider: {fileID: 5284646583668691143, guid: f32ac7808657c224aa5ee756a271f590, type: 3}
 --- !u!65 &6003630182863337048
 BoxCollider:
   m_ObjectHideFlags: 0

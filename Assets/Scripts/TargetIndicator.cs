@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class DirectionToEnemy : MonoBehaviour
+public class TargetIndicator : MonoBehaviour
 {
     [SerializeField] private RectTransform indicator;
     //[SerializeField] private RectTransform arrowCenter;
@@ -11,11 +11,11 @@ public class DirectionToEnemy : MonoBehaviour
     //[SerializeField] private Text nameText;
     [SerializeField] private Text scoreText;
     [SerializeField] private Vector2 offset;
-    private EnemyMovement enemy;
-
+    public EnemyMovement enemy;
+    Color enemyColor;
     private void Start()
     {
-        enemy = EnemyMovement.instance;
+        SetEnemyScore(enemy);
     }
     private void LateUpdate()
     {
@@ -52,4 +52,32 @@ public class DirectionToEnemy : MonoBehaviour
         }
 
     }
+
+    public void SetEnemyScore(EnemyMovement enemy)
+    {
+        this.enemy = enemy;
+        
+        Transform[] childs = enemy.GetComponentsInChildren<Transform>();
+        foreach (Transform child in childs)
+        {
+            SkinnedMeshRenderer renderer = child.GetComponent<SkinnedMeshRenderer>();
+            if (renderer != null)
+            {
+                enemyColor = renderer.material.color;
+            }
+        }
+        SetColor(enemyColor);
+        //ChangeScore(enemy.level);
+        //enemy.OnSetScore += ChangeScore;
+        //nameText.text = enemy.enemyName;
+        background.gameObject.SetActive(true);
+        //nameText.gameObject.SetActive(true);
+    }
+    void SetColor(Color color)
+    {
+        //arrowImage.color = color;
+        //nameText.color = color;
+        background.color = color;
+    }
+
 }

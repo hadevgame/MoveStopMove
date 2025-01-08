@@ -10,12 +10,11 @@ public class SpawnEnemy : MonoBehaviour
     private EnemyPool enemyPool;
     public int enemyCount;
     private int currentPoint = 0;
-    
     void Start()
     {
         enemyPool = EnemyPool.instance;
         
-        InvokeRepeating("Spawn", 0f,3f);
+        InvokeRepeating("Spawn", 0f,1f);
         //Spawn();
     }
     private void Update()
@@ -24,19 +23,18 @@ public class SpawnEnemy : MonoBehaviour
         {
             CancelInvoke("Spawn");
         }
-        
     }
 
     void Spawn() 
     {
         GameObject enemyPrefab = enemyPool.GetEnemyFromPool();
         enemyPrefab.transform.position = listSpawnPoint[currentPoint].transform.position;
-        currentPoint++;
+        currentPoint+=1;
         if (currentPoint >= listSpawnPoint.Length)
         {
             currentPoint = 0;
         }
-
+        enemyPrefab.SetActive(true);
         enemyCount--;
         int randomColor = Random.Range(0, 7);
         Transform[] childs = enemyPrefab.GetComponentsInChildren<Transform>();
@@ -56,5 +54,6 @@ public class SpawnEnemy : MonoBehaviour
                 renderer.materials = materials;
             }
         }
+        
     }
 }

@@ -46,21 +46,5 @@ public class AttackRangePlayer : MonoBehaviour
         }
     }
 
-    /*private void UpdateClosestEnemy(Collider enemyCollider, float distanceToEnemy)
-    {
-        if (distanceToEnemy < closestDistance)
-        {
-            closestEnemy = enemyCollider;  // Cập nhật kẻ địch gần nhất
-            closestDistance = distanceToEnemy;  // Cập nhật khoảng cách
-        }
-    }
-
-    private void AttackClosestEnemy()
-    {
-        if (closestEnemy != null)
-        {
-            targetPoint.DisplayTargetUI(closestEnemy);
-            playerAttack.Attack(closestEnemy);
-        }
-    }*/
+    
 }

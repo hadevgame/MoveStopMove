@@ -5,18 +5,15 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     public static EnemyMovement instance;
-    
     public Animator animator;
     public float minDistance;
     public float maxDistance;
     public float moveSpeed;    
-    
     private Vector3 targetPosition;
     public bool move = true;
     public bool canAttack = true;
     public bool canMove = true;
     public bool isDead = false;
-    
     private void Awake()
     {
         if (!instance)
@@ -26,32 +23,27 @@ public class EnemyMovement : MonoBehaviour
     }
     void Start()
     {
-        // Tạo ra hướng di chuyển và khoảng cách ngẫu nhiên
         SetRandomTargetPosition();
     }
     void Update()
     {
         if (isDead == false )
         {
-            
             MoveEnemy();
-            
         }
         else 
         {
             StartCoroutine(DeadDelayed());
         }
-        
     }
     public void SetRandomTargetPosition()
     {
         float randomX = Random.Range(-1f, 1f); // Ngẫu nhiên theo trục X
         float randomZ = Random.Range(-1f, 1f); // Ngẫu nhiên theo trục Z
-        Vector3 randomDirection = new Vector3(randomX, 0f, randomZ).normalized;
+        Vector3 randomDirection = new Vector3(randomX, 0f, randomZ);
         float randomDistance = Random.Range(minDistance, maxDistance); 
         targetPosition = transform.position + randomDirection.normalized * randomDistance;
         //targetPosition = new Vector3(randomX, transform.position.y, randomZ);
-        
     }
     void MoveEnemy()
     {
@@ -60,10 +52,9 @@ public class EnemyMovement : MonoBehaviour
             move = true;
             animator.SetBool("IsIdle", false);
             animator.SetBool("IsAttack", false);
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed *3 * Time.deltaTime);
-
+            //transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed  * Time.deltaTime);
             Vector3 direction = targetPosition - transform.position;
-            //transform.position += direction.normalized * moveSpeed * Time.deltaTime;
+            transform.position += direction.normalized * moveSpeed * Time.deltaTime;
             Vector3 directionNoY = new Vector3(direction.x, 0, direction.z);
             transform.rotation = Quaternion.LookRotation(directionNoY);
         }
@@ -93,8 +84,10 @@ public class EnemyMovement : MonoBehaviour
         Rigidbody rigidbody = this.GetComponent<Rigidbody>();
         rigidbody.useGravity = false;
         collider.enabled = false;
-        yield return new WaitForSeconds(3f);
+        this.enabled = false;
+        yield return new WaitForSeconds(5f);
         Destroy(this.gameObject);
+        
         //this.gameObject.SetActive(false);
     }
 }

@@ -33,11 +33,7 @@ public class EnemyPool : MonoBehaviour
     {
         for (int i = 0; i < enemyPool.Count; i++)
         {
-            /*if (enemyPool[i].gameObject == null && enemyPool[i] != null)
-            {
-                continue;
-            }*/
-            if (!enemyPool[i].activeInHierarchy )
+            if (!enemyPool[i].activeInHierarchy)
             {
                 if (enemyPool[i].gameObject != null)
                 {

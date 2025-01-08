@@ -25,26 +25,26 @@ public class WeaponPool : MonoBehaviour
         {
             GameObject weaponPF = Instantiate(weaponPrefab);
             weaponPF.SetActive(false);
+            //weaponPF.transform.SetParent(transform);
             weaponPool.Add(weaponPF);
         }
         weaponsRemaining = poolSize;
     }
 
-    public GameObject GetWeaponFromPool() 
+    public GameObject GetWeaponFromPool()
     {
-        for(int i = 0; i < weaponPool.Count; i++) 
+        for (int i = 0; i < weaponPool.Count; i++)
         {
             if (!weaponPool[i].activeInHierarchy)
             {
                 weaponPool[i].SetActive(true);
+                
                 weaponsRemaining--;
                 return weaponPool[i];
-
             }
         }
         return null;
     }
-
     public void ReturnToPool(GameObject weapon) 
     {
         weapon.SetActive(false);

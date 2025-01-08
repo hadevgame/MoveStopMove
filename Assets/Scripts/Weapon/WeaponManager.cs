@@ -14,14 +14,15 @@ public class WeaponManager : MonoBehaviour
     private PlayerAttack player;
     private CanvasAliveManager canvasAliveManager;
     private Collider weaponCollider;
+    public Collider Collider;
     private void Start()
     {
         weaponCollider = GetComponent<Collider>();
-        canvasAliveManager = CanvasAliveManager.instance;
+        
         player = PlayerAttack.instance;
         pool = WeaponPool.instance;
         spawn = SpawnWP.instance;
-        pointManager = PointManager.instance;
+        
         
     }
     private void Update()
@@ -48,8 +49,11 @@ public class WeaponManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy")) 
-        { 
+        //string colliderTag = enemyCollider.gameObject.tag;
+        if (other.CompareTag("Enemy") ) 
+        {
+            pointManager = PointManager.instance;
+            canvasAliveManager = CanvasAliveManager.instance;
             EnemyMovement enemyMovement = other.GetComponent<EnemyMovement>();
             Animator objectAnim = other.gameObject.GetComponent<Animator>();
             objectAnim.SetBool("IsDead", true);
@@ -59,11 +63,6 @@ public class WeaponManager : MonoBehaviour
             spawn.Spawn();
             pointManager.UpdatePoint();
         }
-        /*if (other.CompareTag("Player")) 
-        {
-            Animator objectAnim = other.gameObject.GetComponent<Animator>();
-            objectAnim.SetBool("IsDead", true);
-        }*/
         
     }
     private IEnumerator ReturnWeaponToPoolDelayed()
