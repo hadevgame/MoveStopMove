@@ -7,21 +7,13 @@ public class PlayerAttack : MonoBehaviour
     public PlayerMovement playerMovement;
     public WeaponManager weaponManager;
     private SpawnWP spawn;
-    public static PlayerAttack instance;
     public float cooldown;
     [SerializeField] private Animator animator;
-
-    private void Awake()
-    {
-        if (!instance)
-        {
-            instance = this;
-        }
-    }
+    Vector3 direction;
+    
     private void Update()
     {
         cooldown -= Time.deltaTime;
-        
     }
     private void Start()
     {
@@ -34,12 +26,16 @@ public class PlayerAttack : MonoBehaviour
             cooldown = 1f;
             playerMovement.canAttack = false;
             Vector3 targetPos = other.transform.position;
-            Vector3 direction = targetPos - transform.position;
+            direction = targetPos - transform.position;
             transform.rotation = Quaternion.LookRotation(direction);
             animator.SetBool("IsAttack", true);
-            weaponManager.MoveToTarget(direction);
-            
+            //weaponManager.MoveToTarget(direction);
         }
     }
-    
+    public void MoveWeaponToTarget()
+    {
+        Debug.Log("attack");
+        weaponManager.MoveToTarget(direction);
+    }
+
 }

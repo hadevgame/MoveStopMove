@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2314557454082969367
 Transform:
   m_ObjectHideFlags: 0
@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2314557454083330871}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000020861619, y: 0.000000029802312, z: -0.00000010430809, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 39, y: 39, z: 39}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -71.54, y: -63.4, z: 9.9}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2314557454084296503
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3725903485311932139}
-  checkCollider: {fileID: 5284646583668691143, guid: f32ac7808657c224aa5ee756a271f590, type: 3}
+  player: {fileID: 0}
 --- !u!65 &6003630182863337048
 BoxCollider:
   m_ObjectHideFlags: 0

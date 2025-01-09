@@ -18,7 +18,7 @@ public class CanvasAliveManager : MonoBehaviour
     void Start()
     {
         enemyPool = EnemyPool.instance;
-        countAlive = enemyPool.poolSize;
+        countAlive = enemyPool.poolSize +1;
         textAlive.text = countAlive.ToString();
     }
 

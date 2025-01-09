@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Cinemachine;
+using Cinemachine.Editor;
 public class PointManager : MonoBehaviour
 {
     public static PointManager instance;
     public TextMeshProUGUI pointUIText;
     public GameObject player;
-    public ParticleSystem auraParticle;
+    //public ParticleSystem auraParticle;
     private int currentPoint = 0;
+    public CinemachineVirtualCamera camera;
     public void Awake()
     {
         if (!instance)
@@ -22,8 +25,11 @@ public class PointManager : MonoBehaviour
         pointUIText.text = currentPoint.ToString();
         Vector3 newScale = player.transform.localScale * (1 + 0.1f);
         player.transform.localScale = newScale;
-        auraParticle.gameObject.SetActive(true);
-        auraParticle.Play();
+        Cinemachine.LensSettings lens = camera.m_Lens;
+        lens.FieldOfView += 1.5f;
+        camera.m_Lens = lens;
+        //auraParticle.gameObject.SetActive(true);
+        //auraParticle.Play();
     }
      
     

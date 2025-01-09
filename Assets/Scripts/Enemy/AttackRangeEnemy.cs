@@ -5,20 +5,25 @@ using UnityEngine;
 
 public class AttackRangeEnemy : MonoBehaviour
 {
-    
-    private EnemyMovement enemyMovement;
+    public EnemyMovement enemyMovement;
     public EnemyAttack enemyAttack;
     void Start()
     {
-        enemyMovement = EnemyMovement.instance;
-       
     }
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("Enemy")) 
         {
             enemyMovement.canMove = false;
-            enemyAttack.Attack(other);
+            if (enemyAttack.cooldown < 0) 
+            {
+                enemyAttack.Attack(other);
+            }
+            if (other.CompareTag("map")) 
+            {
+                enemyMovement.canMove = false;
+                enemyMovement.SetRandomTargetPosition();
+            }
         }
         
     }
@@ -29,5 +34,6 @@ public class AttackRangeEnemy : MonoBehaviour
             other = null;
             enemyMovement.canMove = true;
         }
+        
     }
 }

@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class TargetIndicator : MonoBehaviour
 {
     [SerializeField] private RectTransform indicator;
     //[SerializeField] private RectTransform arrowCenter;
     //[SerializeField] private Image arrowImage;
     [SerializeField] private Image background;
-    //[SerializeField] private Text nameText;
-    [SerializeField] private Text scoreText;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Vector2 offset;
     public EnemyMovement enemy;
     Color enemyColor;
@@ -38,14 +39,14 @@ public class TargetIndicator : MonoBehaviour
             indicatorPos.y = Mathf.Clamp(indicatorPos.y, indicator.rect.height / 2, Screen.height - indicator.rect.height / 2);
             indicatorPos.z = 0;
             indicator.position = indicatorPos;
-            //nameText.gameObject.SetActive(false);
+            nameText.gameObject.SetActive(false);
             //arrowCenter.gameObject.SetActive(true);
             Vector3 direction = (newPos - indicatorPos).normalized;
             //arrowCenter.up = direction;
         }
         else
         {
-            //nameText.gameObject.SetActive(true);
+            nameText.gameObject.SetActive(true);
             //arrowCenter.gameObject.SetActive(false);
             indicatorPos.z = 0;
             indicator.position = indicatorPos;
@@ -69,14 +70,14 @@ public class TargetIndicator : MonoBehaviour
         SetColor(enemyColor);
         //ChangeScore(enemy.level);
         //enemy.OnSetScore += ChangeScore;
-        //nameText.text = enemy.enemyName;
+        nameText.text = enemy.gameObject.name.ToString();
         background.gameObject.SetActive(true);
-        //nameText.gameObject.SetActive(true);
+        nameText.gameObject.SetActive(true);
     }
     void SetColor(Color color)
     {
         //arrowImage.color = color;
-        //nameText.color = color;
+        nameText.color = color;
         background.color = color;
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public static EnemyMovement instance;
     public Animator animator;
     public float minDistance;
     public float maxDistance;
@@ -14,13 +13,7 @@ public class EnemyMovement : MonoBehaviour
     public bool canAttack = true;
     public bool canMove = true;
     public bool isDead = false;
-    private void Awake()
-    {
-        if (!instance)
-        {
-            instance = this;
-        }
-    }
+    
     void Start()
     {
         SetRandomTargetPosition();
@@ -43,7 +36,6 @@ public class EnemyMovement : MonoBehaviour
         Vector3 randomDirection = new Vector3(randomX, 0f, randomZ);
         float randomDistance = Random.Range(minDistance, maxDistance); 
         targetPosition = transform.position + randomDirection.normalized * randomDistance;
-        //targetPosition = new Vector3(randomX, transform.position.y, randomZ);
     }
     void MoveEnemy()
     {

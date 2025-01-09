@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnWP : MonoBehaviour
 {
     private WeaponPool pool;
-    private PlayerAttack playerAttack;
+    public PlayerAttack playerAttack;
     public static SpawnWP instance;
     private void Awake()
     {
@@ -17,7 +17,6 @@ public class SpawnWP : MonoBehaviour
     private void Start()
     {
         pool = WeaponPool.instance;
-        playerAttack = PlayerAttack.instance;
         Spawn();
     }
 

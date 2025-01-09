@@ -9,8 +9,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera playCamera;
     [SerializeField] Canvas playCanvas;
     [SerializeField] Canvas playercanvas;
+    [SerializeField] Canvas shopWeaponCanvas;
+    [SerializeField] Canvas mainMenuCanvas;
     [SerializeField] GameObject playerAttackRange;
-
+    [SerializeField] GameObject player;
     [SerializeField] Image vibOn;
     [SerializeField] Image vibOff;
     [SerializeField] Image soundOn;
@@ -56,5 +58,12 @@ public class MainMenu : MonoBehaviour
             soundOff.gameObject.SetActive(false);
             soundIsOn = true;
         }
+    }
+
+    public void OpenWeaponShop() 
+    {
+        mainMenuCanvas.gameObject.SetActive(false);
+        player.SetActive(false);
+        shopWeaponCanvas.gameObject.SetActive(true);
     }
 }

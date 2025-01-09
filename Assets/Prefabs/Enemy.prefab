@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 4521776070764694484}
   m_Layer: 0
   m_Name: AttackRange
-  m_TagString: Untagged
+  m_TagString: AttackRangeEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb9fb89c9fb69fe43b17a0641d3779d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyMovement: {fileID: 4642850683695054016}
   enemyAttack: {fileID: -4373684551966159512}
 --- !u!1 &6791867655506716417
 GameObject:
@@ -449,7 +450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -70.5
+      value: -70.63
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -834,6 +835,18 @@ PrefabInstance:
       propertyPath: enemy
       value: 
       objectReference: {fileID: 4642850683695054016}
+    - target: {fileID: -9111061368328366103, guid: 78878f5a9c995f5479936d2cfc3b8997, type: 3}
+      propertyPath: arrowImage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -9111061368328366103, guid: 78878f5a9c995f5479936d2cfc3b8997, type: 3}
+      propertyPath: arrowCenter
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789331810640033792, guid: 78878f5a9c995f5479936d2cfc3b8997, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7604489639690989509, guid: 78878f5a9c995f5479936d2cfc3b8997, type: 3}
       propertyPath: m_Name
       value: Point
@@ -900,7 +913,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7787705780110098422, guid: 78878f5a9c995f5479936d2cfc3b8997, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -659
       objectReference: {fileID: 0}
     - target: {fileID: 7787705780110098422, guid: 78878f5a9c995f5479936d2cfc3b8997, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -918,7 +931,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2898230817516708693, guid: 78878f5a9c995f5479936d2cfc3b8997, type: 3}
+    - {fileID: 4149281171327596873, guid: 78878f5a9c995f5479936d2cfc3b8997, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

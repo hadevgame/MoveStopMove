@@ -11,31 +11,27 @@ public class WeaponManager : MonoBehaviour
     private PointManager pointManager;
     private DisplayTargetPoint displayTargetPoint;
     private Vector3 startPosition;
-    private PlayerAttack player;
     private CanvasAliveManager canvasAliveManager;
     private Collider weaponCollider;
-    public Collider Collider;
+    SpawnWPEnemy spawnWPEnemy;
     private void Start()
     {
         weaponCollider = GetComponent<Collider>();
-        
-        player = PlayerAttack.instance;
+        spawnWPEnemy = this.transform.parent.GetComponent<SpawnWPEnemy>();
         pool = WeaponPool.instance;
         spawn = SpawnWP.instance;
-        
-        
     }
-    private void Update()
+    /*private void Update()
     {
         if(startPosition!= null) 
         {
-            if(Vector3.Distance(startPosition,transform.position) >= 4.5f * player.transform.localScale.x) 
+            if(Vector3.Distance(startPosition,this.transform.position) >= 4.5f * player.transform.localScale.x) 
             {
                 pool.ReturnToPool(this.gameObject);
                 spawn.Spawn();
             }
         }
-    }
+    }*/
     public void MoveToTarget(Vector3 direction) 
     {
         startPosition = transform.position;
@@ -49,8 +45,8 @@ public class WeaponManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //string colliderTag = enemyCollider.gameObject.tag;
-        if (other.CompareTag("Enemy") ) 
+        
+        if (other.CompareTag("Enemy") && Vector3.Distance(startPosition, this.transform.position) >= 1f) 
         {
             pointManager = PointManager.instance;
             canvasAliveManager = CanvasAliveManager.instance;
@@ -63,7 +59,39 @@ public class WeaponManager : MonoBehaviour
             spawn.Spawn();
             pointManager.UpdatePoint();
         }
-        
+        if (other.CompareTag("Player") && Vector3.Distance(startPosition,this.transform.position) >= 1f ) 
+        {
+            pointManager = PointManager.instance;
+            PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
+            Animator playertAnim = other.gameObject.GetComponent<Animator>();
+            playertAnim.SetBool("IsDead", true);
+            playerMovement.isDead = true;
+            spawnWPEnemy.Spawn();
+            pointManager.UpdatePoint();
+
+        }
+        /*if (other.CompareTag("Enemy") && checkPlayer == false)
+        {
+            EnemyMovement enemyMovement = other.GetComponent<EnemyMovement>();
+            Animator objectAnim = other.gameObject.GetComponent<Animator>();
+            enemyMovement.isDead = true;
+            canvasAliveManager.UpdateAlive();
+            spawnWPEnemy.Spawn();
+        }*/
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("AttackRange")) 
+        {
+            pool.ReturnToPool(this.gameObject);
+            spawn.Spawn();
+        }
+        if (other.CompareTag("AttackRangeEnemy"))
+        {
+            Destroy(this.gameObject);
+            spawnWPEnemy.Spawn();
+        }
     }
     private IEnumerator ReturnWeaponToPoolDelayed()
     {

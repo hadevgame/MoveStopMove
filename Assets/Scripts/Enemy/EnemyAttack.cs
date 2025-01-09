@@ -6,7 +6,7 @@ public class EnemyAttack : MonoBehaviour
 {
     public EnemyMovement enemyMovement;
     public WeaponManager weaponManager;
-   
+    Vector3 direction;
     public float cooldown;
     [SerializeField] private Animator animator;
     
@@ -18,14 +18,18 @@ public class EnemyAttack : MonoBehaviour
     {
         if (enemyMovement.move == false && enemyMovement.canAttack == true)
         {
-            cooldown = 2f;
+            cooldown = 3f;
             enemyMovement.canAttack = false;
             Vector3 targetPos = other.transform.position;
-            Vector3 direction = targetPos - this.transform.position;
+            direction = targetPos - this.transform.position;
             transform.rotation = Quaternion.LookRotation(direction);
             this.animator.SetBool("IsAttack", true);
             //weaponManager.MoveToTarget(direction);
         }
         
+    }
+    public void MoveWeaponToTarget()
+    {
+        weaponManager.MoveToTarget(direction);
     }
 }
